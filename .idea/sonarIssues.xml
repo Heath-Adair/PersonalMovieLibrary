@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="issues">
+    <option name="index">
+      <map>
+        <entry key="/Dummy.txt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="/fragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$APPLICATION_CONFIG_DIR$/scratches/PDInlineImageTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$APPLICATION_CONFIG_DIR$/scratches/scratch_3.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12.jar!/org/junit/internal/runners/model/ReflectiveCallable.class">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/pom.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/Application.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/Question.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/Application.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/in28minutes/Survey.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/in28minutes/service/SurveyService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/in28minutes/service/WelcomeService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/in28minutes/services/WelcomeService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/in28minutes/springboot/Application.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/in28minutes/springboot/WelcomeController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/in28minutes/springboot/WelcomeService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/in28minutes/springboot/controller/SurveyControlller.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/in28minutes/springboot/jpa/User.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/in28minutes/springboot/jpa/UserCommandLineRunner.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/in28minutes/springboot/jpa/UserRepository.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/in28minutes/springboot/jpa/UserRestRepository.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/in28minutes/springboot/model/Question.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/in28minutes/springboot/service/WelcomeService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/personalmovielib/api/controller/MovieController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/personalmovielib/api/jpa/MovieCommandLineRunner.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/personalmovielib/api/jpa/MovieRepository.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/personalmovielib/api/jpa/User.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/personalmovielib/api/jpa/UserCommandLineRunner.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/personalmovielib/api/jpa/UserRepository.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/personalmovielib/api/jpa/UserRestRepository.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/personalmovielib/api/jpaRepository/MovieCommandLineRunner.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/personalmovielib/api/jpaRepository/MovieRepository.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/personalmovielib/api/model/Movie.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/personalmovielib/api/service/MovieService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/personalmovielib/springboot/jpa/User.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/personalmovielib/springboot/jpa/UserCommandLineRunner.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/personalmovielib/springboot/jpa/UserRepository.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/personalmovielib/springboot/jpa/UserRestRepository.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/resources/application-dev.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/resources/application-prod.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/resources/application.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/com/in28minutes/springboot/controller/SurveyControllerIT.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/com/in28minutes/springboot/controller/SurveyControllerTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/com/personalmovielib/api/controller/MovieControllerIT.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/com/personalmovielib/api/controller/MovieControllerTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/com/personalmovielib/api/controller/SurveyControllerIT.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/com/personalmovielib/api/controller/SurveyControllerTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/com/personalmovielib/springboot/controller/SurveyControllerIT.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/com/personalmovielib/springboot/controller/SurveyControllerTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="H:/svn/consilience/maven/trunk/core/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="H:/svn/consilience/maven/trunk/core/src/main/java/com/efinsys/ids/core/CaseProcessorFactory.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="H:/svn/consilience/maven/trunk/core/src/main/java/com/efinsys/ids/event/QuestionPackageUIEvent.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="H:/svn/consilience/maven/trunk/core/src/main/java/com/efinsys/ids/print/PrintUtils.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="H:/svn/consilience/maven/trunk/core/src/main/java/com/efinsys/ids/token/PDFTokenPopulationStrategy.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="H:/svn/consilience/maven/trunk/core/src/main/resources/com/efinsys/ids/model/Model.dtd">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="H:/svn/consilience/maven/trunk/core/src/main/resources/com/efinsys/ids/ui/templates/FieldElements.ftlh">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="H:/svn/consilience/maven/trunk/core/src/test/dummyjava/PDInlineImageTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="H:/svn/consilience/maven/trunk/core/src/test/java/PDInlineImageTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="H:/svn/consilience/maven/trunk/core/src/test/java/com/efinsys/ids/token/test/PDFTokenPopulationStrategyTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="H:/svn/maven-deployment/MAEDSS/developer/hadair/MAEDSS-11734/Deployment/build-deployed-custom.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="H:/svn/maven-deployment/MAEDSS/developer/hadair/MAEDSS-11734/build.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="H:/svn/maven-deployment/MAEDSS/developer/hadair/MAEDSS-11734/build/war/build-deployed-custom.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="H:/svn/maven-deployment/QAEDSS/trunk/Deployment/WEB-INF/classes/com/efinsys/ids/model/DiseaseSurveillanceModel_EPI_IMM.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
