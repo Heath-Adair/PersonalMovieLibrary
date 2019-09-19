@@ -2,7 +2,6 @@ package com.personalmovielib.api.service;
 
 import com.personalmovielib.api.jpaRepository.MovieRepository;
 import com.personalmovielib.api.model.Movie;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -17,8 +16,11 @@ import java.util.Date;
 @Component
 public class MovieService {
 
-	@Autowired
 	private MovieRepository movieRepository;
+
+	public MovieService(MovieRepository movieRepository) {
+		this.movieRepository = movieRepository;
+	}
 
 	public String getTimeOfDay() {
 		Calendar cal = Calendar.getInstance();
