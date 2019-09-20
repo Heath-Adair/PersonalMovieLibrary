@@ -1,6 +1,5 @@
 package com.personalmovielib.api.controller;
 
-import com.personalmovielib.api.jpaRepository.MovieRepository;
 import com.personalmovielib.api.model.Movie;
 import com.personalmovielib.api.service.MovieService;
 import org.springframework.http.ResponseEntity;
@@ -11,11 +10,9 @@ import java.util.List;
 @RestController
 class MovieController {
 
-    private MovieRepository movieRepository;
     private MovieService movieService;
 
-    public MovieController(MovieRepository movieRepository, MovieService movieService) {
-        this.movieRepository = movieRepository;
+    public MovieController(MovieService movieService) {
         this.movieService = movieService;
     }
 
@@ -35,16 +32,15 @@ class MovieController {
     }
 
     @GetMapping("/api/movies/{movieId}")
-    public ResponseEntity<?> retrieveDetailsForMovieByID(@PathVariable("movieId") Long movieId) {
+    public ResponseEntity<?> getMovieByID(@PathVariable("movieId") Long movieId) {
         return movieService.retrieveDetailsForMovieByID(movieId);
     }
 
     //Returns List of movies in case there are multiple movies with the same title
     @GetMapping("/api/movies/search/{movieTitle}")
-    public List<Movie> retrieveDetailsForMovieByTitle(@PathVariable("movieTitle") String movieTitle) {
+    public List<Movie> getMovieByTitle(@PathVariable("movieTitle") String movieTitle) {
         //TODO Might could make this better with @RequestParam in the signature
-        //TODO - Address issues for movie titles like "The Mummy" vs "Mummy, The"?
-        return movieRepository.findByTitleIgnoreCase(movieTitle.trim());
+        return movieService.getMovieByTitle(movieTitle);
     }
 
     @DeleteMapping("/api/movies/{movieId}")
@@ -54,6 +50,6 @@ class MovieController {
 
     @GetMapping("/api/movies/list")
     public Iterable<Movie> getMovieList() {
-        return movieRepository.findAll();
+        return movieService.getMovies();
     }
 }

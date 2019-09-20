@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class MovieService {
@@ -82,5 +83,14 @@ public class MovieService {
 			movieRepository.delete(movieId);
 			return new ResponseEntity<Movie>(HttpStatus.ACCEPTED);
 		}
+	}
+
+	public Iterable<Movie> getMovies() {
+		return movieRepository.findAll();
+	}
+
+	public List<Movie> getMovieByTitle(String movieTitle) {
+		//TODO - Address issues for movie titles like "The Mummy" vs "Mummy, The"?
+		return movieRepository.findByTitleIgnoreCase(movieTitle.trim());
 	}
 }
