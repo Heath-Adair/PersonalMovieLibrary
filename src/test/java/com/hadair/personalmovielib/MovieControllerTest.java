@@ -1,8 +1,9 @@
-package com.personalmovielib.api.controller;
+package com.hadair.personalmovielib;
 
-import com.personalmovielib.api.jpaRepository.MovieRepository;
-import com.personalmovielib.api.model.Movie;
-import com.personalmovielib.api.service.MovieService;
+import com.hadair.personalmovielib.MovieController;
+import com.hadair.personalmovielib.MovieRepository;
+import com.hadair.personalmovielib.Movie;
+import com.hadair.personalmovielib.MovieService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package com.personalmovielib.api.model;
+package com.hadair.personalmovielib;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

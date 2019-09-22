@@ -1,7 +1,5 @@
-package com.personalmovielib.api.controller;
+package com.hadair.personalmovielib;
 
-import com.personalmovielib.api.model.Movie;
-import com.personalmovielib.api.service.MovieService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +12,6 @@ class MovieController {
 
     public MovieController(MovieService movieService) {
         this.movieService = movieService;
-    }
-
-    @GetMapping("/api/timeOfDay")
-    public String getTimeOfDay() {
-        return movieService.getTimeOfDay();
     }
 
     @PostMapping("/api/movies/")

@@ -1,33 +1,20 @@
-package com.personalmovielib.api.service;
+package com.hadair.personalmovielib;
 
-import com.personalmovielib.api.jpaRepository.MovieRepository;
-import com.personalmovielib.api.model.Movie;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-@Component
+@Service
 public class MovieService {
 
 	private MovieRepository movieRepository;
 
 	public MovieService(MovieRepository movieRepository) {
 		this.movieRepository = movieRepository;
-	}
-
-	public String getTimeOfDay() {
-		Calendar cal = Calendar.getInstance();
-		Date date = cal.getTime();
-		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-		return "Current server-side time is " + dateFormat.format(date);
 	}
 
 	public ResponseEntity<Void> addMovie(Movie newMovie) {

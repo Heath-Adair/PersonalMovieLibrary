@@ -1,11 +1,10 @@
-package com.personalmovielib.api.controller;
+package com.hadair.personalmovielib;
 
-import com.personalmovielib.api.Application;
-import com.personalmovielib.api.model.Movie;
+import com.hadair.Application;
+import com.hadair.personalmovielib.Movie;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
