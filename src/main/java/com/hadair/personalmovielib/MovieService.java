@@ -37,12 +37,16 @@ public class MovieService {
 	public ResponseEntity<Void> updateMovie(Long movieId, Movie newMovie) {
 		Movie movie = movieRepository.findOne(movieId);
 
+		if(movie == null) {
+			return ResponseEntity.noContent().build();
+		}
+
 		movie.setTitle(newMovie.getTitle());
 		movie.setDuration(newMovie.getDuration());
 		movie.setGenre(newMovie.getGenre());
 		movie.setRating(newMovie.getRating());
 		movie.setYearReleased(newMovie.getYearReleased());
-		Movie savedMovie = movieRepository.save(newMovie);
+		Movie savedMovie = movieRepository.save(movie);
 
 		if(savedMovie == null) {
 			//Status 204 No Content
