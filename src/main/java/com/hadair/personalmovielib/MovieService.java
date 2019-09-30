@@ -1,11 +1,7 @@
 package com.hadair.personalmovielib;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @Service
@@ -17,62 +13,45 @@ public class MovieService {
 		this.movieRepository = movieRepository;
 	}
 
-	public ResponseEntity<Void> addMovie(Movie newMovie) {
+	public Long addMovie(Movie newMovie) {
 		if(!movieRepository.findByTitleIgnoreCaseAndYearReleased(newMovie.getTitle(), newMovie.getYearReleased()).isEmpty()) {
-			return new ResponseEntity<Void>(HttpStatus.NOT_MODIFIED);
+            //Movie already exists
+		    return -1L;
 		} else {
 			Movie savedMovie = movieRepository.save(newMovie);
 			if (savedMovie == null) {
-				//Status 204 No Content
-				return ResponseEntity.noContent().build();
+				//Failed to save movie
+				return -2L;
 			} else {
-				URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-						.path("/{id}").buildAndExpand(savedMovie.getId()).toUri();
-				//Status 201 Created
-				return ResponseEntity.created(location).build();
+				return savedMovie.getId();
 			}
 		}
 	}
 
-	public ResponseEntity<Void> updateMovie(Long movieId, Movie newMovie) {
+	public Movie updateMovie(Long movieId, Movie updatedMovie) {
+		//TODO if new movie field is null do not update that field, but maybe if blank? Maybe handle this as part of validation
 		Movie movie = movieRepository.findOne(movieId);
-
-		if(movie == null) {
-			return ResponseEntity.noContent().build();
+		if(movie != null) {
+			movie.setTitle(updatedMovie.getTitle());
+			movie.setDuration(updatedMovie.getDuration());
+			movie.setGenre(updatedMovie.getGenre());
+			movie.setRating(updatedMovie.getRating());
+			movie.setYearReleased(updatedMovie.getYearReleased());
+			movie = movieRepository.save(movie);
 		}
-
-		movie.setTitle(newMovie.getTitle());
-		movie.setDuration(newMovie.getDuration());
-		movie.setGenre(newMovie.getGenre());
-		movie.setRating(newMovie.getRating());
-		movie.setYearReleased(newMovie.getYearReleased());
-		Movie savedMovie = movieRepository.save(movie);
-
-		if(savedMovie == null) {
-			//Status 204 No Content
-			return ResponseEntity.noContent().build();
-		} else {
-			URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-					.path("/{id}").buildAndExpand(movie.getId()).toUri();
-			//Status 201 Created
-			return ResponseEntity.created(location).build();
-		}
+		return movie;
 	}
 
-	public ResponseEntity<?> retrieveDetailsForMovieByID(Long movieId) {
-		Movie movie = movieRepository.findOne(movieId);
-		if (movie == null) {
-			return new ResponseEntity<>("Movie with id " + movieId + " not found", HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<>(movie, HttpStatus.OK);
+	public Movie getMovieByID(Long movieId) {
+		return movieRepository.findOne(movieId);
 	}
 
-	public ResponseEntity<?> deleteMovie(Long movieId) {
+	public int deleteMovie(Long movieId) {
 		if (!movieRepository.exists(movieId)) {
-			return new ResponseEntity<>("Movie with id " + movieId + " not found", HttpStatus.NOT_FOUND);
+			return 0;
 		} else {
 			movieRepository.delete(movieId);
-			return new ResponseEntity<Movie>(HttpStatus.ACCEPTED);
+			return 1;
 		}
 	}
 
