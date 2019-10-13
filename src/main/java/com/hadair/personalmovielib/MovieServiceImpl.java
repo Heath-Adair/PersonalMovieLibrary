@@ -1,5 +1,8 @@
 package com.hadair.personalmovielib;
 
+import com.hadair.exceptions.ElementAlreadyExistsException;
+import com.hadair.exceptions.ElementNotFoundException;
+import com.hadair.exceptions.ElementSaveFailedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,17 +17,15 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public Long addMovie(Movie newMovie) {
+	public Movie addMovie(Movie newMovie) throws ElementAlreadyExistsException, ElementSaveFailedException {
 		if(!movieRepository.findByTitleIgnoreCaseAndYearReleased(newMovie.getTitle(), newMovie.getYearReleased()).isEmpty()) {
-            //Movie already exists
-		    return -1L;
+			throw new ElementAlreadyExistsException("Movie with title " + newMovie.getTitle() + ", and released in the year " + newMovie.getYearReleased() + " already exists");
 		} else {
 			Movie savedMovie = movieRepository.save(newMovie);
 			if (savedMovie == null) {
-				//Failed to save movie
-				return -2L;
+				throw new ElementSaveFailedException("The movie " + newMovie.getTitle() + " failed to be saved");
 			} else {
-				return savedMovie.getId();
+				return savedMovie;
 			}
 		}
 	}
@@ -50,12 +51,11 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public int deleteMovie(Long movieId) {
+	public void deleteMovie(Long movieId) throws ElementNotFoundException {
 		if (!movieRepository.exists(movieId)) {
-			return 0;
+			throw new ElementNotFoundException("Movie with ID: " + movieId + ", was not found");
 		} else {
 			movieRepository.delete(movieId);
-			return 1;
 		}
 	}
 

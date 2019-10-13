@@ -1,15 +1,19 @@
 package com.hadair.personalmovielib;
 
+import com.hadair.exceptions.ElementAlreadyExistsException;
+import com.hadair.exceptions.ElementNotFoundException;
+import com.hadair.exceptions.ElementSaveFailedException;
+
 import java.util.List;
 
 public interface MovieService {
-    Long addMovie(Movie newMovie);
+    Movie addMovie(Movie newMovie) throws ElementAlreadyExistsException, ElementSaveFailedException;
 
     Movie updateMovie(Long movieId, Movie updatedMovie);
 
     Movie getMovieByID(Long movieId);
 
-    int deleteMovie(Long movieId);
+    void deleteMovie(Long movieId) throws ElementNotFoundException;
 
     Iterable<Movie> getMovies();
 
