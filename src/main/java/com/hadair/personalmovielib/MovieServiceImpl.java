@@ -6,6 +6,7 @@ import com.hadair.exceptions.ElementSaveFailedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -31,31 +32,35 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public Movie updateMovie(Long movieId, Movie updatedMovie) {
+	public Movie updateMovie(Long movieId, Movie updatedMovie) throws ElementNotFoundException {
 		//TODO if new movie field is null do not update that field, but maybe if blank? Maybe handle this as part of validation
-		Movie movie = movieRepository.findOne(movieId);
-		if(movie != null) {
+		//TODO Fix this Optional abuse
+		Optional<Movie> optionalMovie = movieRepository.findById(movieId);
+		if(optionalMovie.isPresent()) {
+			Movie movie = optionalMovie.get();
 			movie.setTitle(updatedMovie.getTitle());
 			movie.setDuration(updatedMovie.getDuration());
 			movie.setGenre(updatedMovie.getGenre());
 			movie.setRating(updatedMovie.getRating());
 			movie.setYearReleased(updatedMovie.getYearReleased());
 			movie = movieRepository.save(movie);
+			return movie;
+		} else {
+			throw new ElementNotFoundException("Movie with id: " + movieId + " not found.");
 		}
-		return movie;
 	}
 
 	@Override
 	public Movie getMovieByID(Long movieId) {
-		return movieRepository.findOne(movieId);
+		return movieRepository.findById(movieId).get();
 	}
 
 	@Override
 	public void deleteMovie(Long movieId) throws ElementNotFoundException {
-		if (!movieRepository.exists(movieId)) {
+		if (!movieRepository.existsById(movieId)) {
 			throw new ElementNotFoundException("Movie with ID: " + movieId + ", was not found");
 		} else {
-			movieRepository.delete(movieId);
+			movieRepository.deleteById(movieId);
 		}
 	}
 

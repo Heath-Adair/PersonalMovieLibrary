@@ -21,10 +21,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 //JUnit testing with Mockito
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = MovieController.class)
+//TODO Fix/Rewrite these broken tests
 public class MovieControllerTest {
 
     @Autowired
@@ -58,7 +60,7 @@ public class MovieControllerTest {
     @Test
     public void testRetrieveDetailsForMovieByID() throws Exception {
         Movie mockMovie = new Movie(1L,"Spider-Man: Homecoming", "Action", 2017, "PG-13", "2h 13m");
-        Mockito.when(movieRepository.findOne(Mockito.anyLong())).thenReturn(mockMovie);
+        Mockito.when(movieRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(mockMovie));
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
                 "/api/movie/1").accept(MediaType.APPLICATION_JSON);
@@ -87,7 +89,7 @@ public class MovieControllerTest {
 
     @Test
     public void testDeleteMovieAccepted() throws Exception {
-        Mockito.when(movieRepository.exists(Mockito.anyLong())).thenReturn(true);
+        Mockito.when(movieRepository.existsById(Mockito.anyLong())).thenReturn(true);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(
                 "/api/movie/1").accept(MediaType.APPLICATION_JSON);
@@ -100,7 +102,7 @@ public class MovieControllerTest {
 
     @Test
     public void testDeleteMovieNotFound() throws Exception {
-        Mockito.when(movieRepository.exists(Mockito.anyLong())).thenReturn(false);
+        Mockito.when(movieRepository.existsById(Mockito.anyLong())).thenReturn(false);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(
                 "/api/movie/1").accept(MediaType.APPLICATION_JSON);

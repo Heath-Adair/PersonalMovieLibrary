@@ -36,14 +36,19 @@ class MovieController {
     }
 
     @PutMapping("/api/movies/{movieId}")
-    public ResponseEntity<Void> updateMovie(@PathVariable("movieId") Long movieId, @RequestBody Movie newMovie) {
-        Movie movie = movieService.updateMovie(movieId, newMovie);
-        if(movie == null) {
-            return ResponseEntity.noContent().build();
-        } else {
-            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                    .path("/{id}").buildAndExpand(movie.getId()).toUri();
-            return ResponseEntity.created(location).build();
+    public ResponseEntity updateMovie(@PathVariable("movieId") Long movieId, @RequestBody Movie newMovie) {
+        try {
+            Movie movie = movieService.updateMovie(movieId, newMovie);
+
+            if(movie == null) {
+                return ResponseEntity.noContent().build();
+            } else {
+                URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                        .path("/{id}").buildAndExpand(movie.getId()).toUri();
+                return ResponseEntity.created(location).build();
+            }
+        } catch(ElementNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 

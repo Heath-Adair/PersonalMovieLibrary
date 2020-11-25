@@ -9,7 +9,7 @@ import java.util.List;
 public interface MovieService {
     Movie addMovie(Movie newMovie) throws ElementAlreadyExistsException, ElementSaveFailedException;
 
-    Movie updateMovie(Long movieId, Movie updatedMovie);
+    Movie updateMovie(Long movieId, Movie updatedMovie) throws ElementNotFoundException;
 
     Movie getMovieByID(Long movieId);
 
