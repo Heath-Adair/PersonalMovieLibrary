@@ -1,8 +1,5 @@
 package com.hadair.personalmovielib;
 
-import com.hadair.exceptions.ElementAlreadyExistsException;
-import com.hadair.exceptions.ElementNotFoundException;
-import com.hadair.exceptions.ElementSaveFailedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,41 +11,29 @@ import java.util.List;
 @RestController
 class MovieController {
 
-    private MovieService movieService;
+    private final MovieService movieService;
 
     public MovieController(MovieService movieService) {
         this.movieService = movieService;
     }
 
     @PostMapping("/api/movies")
-    public ResponseEntity<?> addMovie(@RequestBody Movie newMovie) {
-        Movie addedMovie;
-        try {
-            addedMovie = movieService.addMovie(newMovie);
-        } catch (ElementAlreadyExistsException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
-        } catch (ElementSaveFailedException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NO_CONTENT);
-        }
+    public ResponseEntity<Object> addMovie(@RequestBody Movie newMovie) {
+        Movie addedMovie = movieService.addMovie(newMovie);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(addedMovie.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/api/movies/{movieId}")
-    public ResponseEntity updateMovie(@PathVariable("movieId") Long movieId, @RequestBody Movie newMovie) {
-        try {
-            Movie movie = movieService.updateMovie(movieId, newMovie);
-
-            if(movie == null) {
-                return ResponseEntity.noContent().build();
-            } else {
-                URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                        .path("/{id}").buildAndExpand(movie.getId()).toUri();
-                return ResponseEntity.created(location).build();
-            }
-        } catch(ElementNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    public ResponseEntity<Object> updateMovie(@PathVariable("movieId") Long movieId, @RequestBody Movie newMovie) {
+        Movie movie = movieService.updateMovie(movieId, newMovie);
+        if(movie == null) {
+            return ResponseEntity.noContent().build();
+        } else {
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}").buildAndExpand(movie.getId()).toUri();
+            return ResponseEntity.created(location).build();
         }
     }
 
@@ -69,13 +54,9 @@ class MovieController {
     }
 
     @DeleteMapping("/api/movies/{movieId}")
-    public ResponseEntity<?> deleteMovie(@PathVariable("movieId") Long movieId) {
-        try {
-            movieService.deleteMovie(movieId);
-        } catch(ElementNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<Movie>(HttpStatus.ACCEPTED);
+    public ResponseEntity<Movie> deleteMovie(@PathVariable("movieId") Long movieId) {
+        movieService.deleteMovie(movieId);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/api/movies/list")

@@ -11,16 +11,17 @@ import java.util.Optional;
 @Service
 public class MovieServiceImpl implements MovieService {
 
-	private MovieRepository movieRepository;
+	private final MovieRepository movieRepository;
 
 	public MovieServiceImpl(MovieRepository movieRepository) {
 		this.movieRepository = movieRepository;
 	}
 
 	@Override
-	public Movie addMovie(Movie newMovie) throws ElementAlreadyExistsException, ElementSaveFailedException {
+	public Movie addMovie(Movie newMovie) {
 		if(!movieRepository.findByTitleIgnoreCaseAndYearReleased(newMovie.getTitle(), newMovie.getYearReleased()).isEmpty()) {
-			throw new ElementAlreadyExistsException("Movie with title " + newMovie.getTitle() + ", and released in the year " + newMovie.getYearReleased() + " already exists");
+			throw new ElementAlreadyExistsException("Movie with title " + newMovie.getTitle()
+					+ ", and released in the year " + newMovie.getYearReleased() + " already exists");
 		} else {
 			Movie savedMovie = movieRepository.save(newMovie);
 			if (savedMovie == null) {
@@ -32,7 +33,7 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public Movie updateMovie(Long movieId, Movie updatedMovie) throws ElementNotFoundException {
+	public Movie updateMovie(Long movieId, Movie updatedMovie) {
 		//TODO if new movie field is null do not update that field, but maybe if blank? Maybe handle this as part of validation
 		//TODO Fix this Optional abuse
 		Optional<Movie> optionalMovie = movieRepository.findById(movieId);
@@ -56,7 +57,7 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public void deleteMovie(Long movieId) throws ElementNotFoundException {
+	public void deleteMovie(Long movieId) {
 		if (!movieRepository.existsById(movieId)) {
 			throw new ElementNotFoundException("Movie with ID: " + movieId + ", was not found");
 		} else {
