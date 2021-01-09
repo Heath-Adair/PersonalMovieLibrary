@@ -23,12 +23,7 @@ public class MovieServiceImpl implements MovieService {
 			throw new ElementAlreadyExistsException("Movie with title " + newMovie.getTitle()
 					+ ", and released in the year " + newMovie.getYearReleased() + " already exists");
 		} else {
-			Movie savedMovie = movieRepository.save(newMovie);
-			if (savedMovie == null) {
-				throw new ElementSaveFailedException("The movie " + newMovie.getTitle() + " failed to be saved");
-			} else {
-				return savedMovie;
-			}
+			return movieRepository.save(newMovie);
 		}
 	}
 
@@ -53,7 +48,12 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public Movie getMovieByID(Long movieId) {
-		return movieRepository.findById(movieId).get();
+		Optional<Movie> movie = movieRepository.findById(movieId);
+		if(movie.isPresent()) {
+			return movie.get();
+		} else {
+			throw new ElementNotFoundException("Movie with id: " + movieId + " not found.");
+		}
 	}
 
 	@Override
