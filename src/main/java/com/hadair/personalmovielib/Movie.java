@@ -11,23 +11,17 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String title;
     private String genre;
     private int yearReleased;
     private String rating; //An enum would be better
     private String duration;
 
-    protected Movie() {
-    }
+    protected Movie() {}
 
     public Movie(Long id, String title, String genre, int yearReleased, String rating, String duration) {
+        this(title, genre, yearReleased, rating, duration);
         this.id = id;
-        this.title = title;
-        this.genre = genre;
-        this.yearReleased = yearReleased;
-        this.rating = rating;
-        this.duration = duration;
     }
 
     public Movie(String title, String genre, int yearReleased, String rating, String duration) {
@@ -38,18 +32,15 @@ public class Movie {
         this.duration = duration;
     }
 
-    public Movie(String title, String genre) {
-        super();
-        this.title = title;
-        this.genre = genre;
-    }
-
     public Long getId() {
         return id;
     }
 
-    public String getTitle() {
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public String getTitle() {
         return title;
     }
 
@@ -91,6 +82,7 @@ public class Movie {
 
     @Override
     public String toString() {
-        return String.format("Movie [id=%s, title=%s, genre=%s, yearReleased=%s, rating=%s, duration=%s]", id, title, genre, yearReleased, rating, duration);
+        return String.format("Movie [id=%s, title=%s, genre=%s, yearReleased=%s, rating=%s, duration=%s]",
+                id, title, genre, yearReleased, rating, duration);
     }
 }
