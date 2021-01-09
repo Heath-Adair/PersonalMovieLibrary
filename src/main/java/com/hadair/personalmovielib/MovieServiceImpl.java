@@ -2,7 +2,6 @@ package com.hadair.personalmovielib;
 
 import com.hadair.exceptions.ElementAlreadyExistsException;
 import com.hadair.exceptions.ElementNotFoundException;
-import com.hadair.exceptions.ElementSaveFailedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,18 +28,16 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public Movie updateMovie(Long movieId, Movie updatedMovie) {
-		//TODO if new movie field is null do not update that field, but maybe if blank? Maybe handle this as part of validation
 		//TODO Fix this Optional abuse
 		Optional<Movie> optionalMovie = movieRepository.findById(movieId);
 		if(optionalMovie.isPresent()) {
 			Movie movie = optionalMovie.get();
-			movie.setTitle(updatedMovie.getTitle());
-			movie.setDuration(updatedMovie.getDuration());
-			movie.setGenre(updatedMovie.getGenre());
-			movie.setRating(updatedMovie.getRating());
-			movie.setYearReleased(updatedMovie.getYearReleased());
-			movie = movieRepository.save(movie);
-			return movie;
+			movie.setTitle(updatedMovie.getTitle() != null ? updatedMovie.getTitle() : movie.getTitle());
+			movie.setDuration(updatedMovie.getDuration() != null ? updatedMovie.getDuration() : movie.getDuration());
+			movie.setGenre(updatedMovie.getGenre() != null ? updatedMovie.getGenre() : movie.getGenre());
+			movie.setRating(updatedMovie.getRating() != null ? updatedMovie.getRating() : movie.getRating());
+			movie.setYearReleased(updatedMovie.getYearReleased() != 0 ? updatedMovie.getYearReleased() : movie.getYearReleased());
+			return movieRepository.save(movie);
 		} else {
 			throw new ElementNotFoundException("Movie with id: " + movieId + " not found.");
 		}
