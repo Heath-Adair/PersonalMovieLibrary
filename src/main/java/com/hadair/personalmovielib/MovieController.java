@@ -9,6 +9,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/movies")
 class MovieController {
 
     private final MovieService movieService;
@@ -17,7 +18,7 @@ class MovieController {
         this.movieService = movieService;
     }
 
-    @PostMapping("/api/movies")
+    @PostMapping
     public ResponseEntity<Object> addMovie(@RequestBody Movie newMovie) {
         Movie addedMovie = movieService.addMovie(newMovie);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -25,7 +26,7 @@ class MovieController {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("/api/movies/{movieId}")
+    @PutMapping("/{movieId}")
     public ResponseEntity<Object> updateMovie(@PathVariable("movieId") Long movieId, @RequestBody Movie newMovie) {
         Movie movie = movieService.updateMovie(movieId, newMovie);
         if(movie == null) {
@@ -37,7 +38,7 @@ class MovieController {
         }
     }
 
-    @GetMapping("/api/movies/{movieId}")
+    @GetMapping("/{movieId}")
     public ResponseEntity<?> getMovieByID(@PathVariable("movieId") Long movieId) {
         Movie movie = movieService.getMovieByID(movieId);
         if (movie == null) {
@@ -47,19 +48,19 @@ class MovieController {
     }
 
     //Returns List of movies in case there are multiple movies with the same title
-    @GetMapping("/api/movies/search/{movieTitle}")
+    @GetMapping("/search/{movieTitle}")
     public List<Movie> getMovieByTitle(@PathVariable("movieTitle") String movieTitle) {
         //TODO Might could make this better with @RequestParam in the signature
         return movieService.getMovieByTitle(movieTitle);
     }
 
-    @DeleteMapping("/api/movies/{movieId}")
+    @DeleteMapping("/{movieId}")
     public ResponseEntity<Movie> deleteMovie(@PathVariable("movieId") Long movieId) {
         movieService.deleteMovie(movieId);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/api/movies/list")
+    @GetMapping("/list")
     public Iterable<Movie> getMovieList() {
         return movieService.getMovies();
     }
