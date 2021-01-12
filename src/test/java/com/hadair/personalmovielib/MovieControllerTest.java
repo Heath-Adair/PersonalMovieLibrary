@@ -1,13 +1,9 @@
 package com.hadair.personalmovielib;
 
-import com.hadair.personalmovielib.MovieController;
-import com.hadair.personalmovielib.MovieRepository;
-import com.hadair.personalmovielib.Movie;
-import com.hadair.personalmovielib.MovieService;
+import com.hadair.exceptions.ElementNotFoundException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -21,12 +17,15 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 //JUnit testing with Mockito
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = MovieController.class)
-//TODO Fix/Rewrite these broken tests
+//TODO refactor
 public class MovieControllerTest {
 
     @Autowired
@@ -60,10 +59,10 @@ public class MovieControllerTest {
     @Test
     public void testRetrieveDetailsForMovieByID() throws Exception {
         Movie mockMovie = new Movie(1L,"Spider-Man: Homecoming", "Action", 2017, "PG-13", "2h 13m");
-        Mockito.when(movieRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(mockMovie));
+        when(movieService.getMovieByID(anyLong())).thenReturn(mockMovie);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-                "/api/movie/1").accept(MediaType.APPLICATION_JSON);
+                "/api/movies/1").accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         String expected = "{\"id\":1,\"title\":\"Spider-Man: Homecoming\",\"genre\":\"Action\",\"yearReleased\":2017,\"rating\":\"PG-13\",\"duration\":\"2h 13m\"}";
@@ -76,10 +75,10 @@ public class MovieControllerTest {
         Movie mockMovie = new Movie(1L,"Spider-Man: Homecoming", "Action", 2017, "PG-13", "2h 13m");
         List<Movie> mockMovieList = new ArrayList<>();
         mockMovieList.add(mockMovie);
-        Mockito.when(movieRepository.findByTitleIgnoreCase(Mockito.anyString())).thenReturn(mockMovieList);
+        when(movieService.getMovieByTitle(anyString())).thenReturn(mockMovieList);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-                "/api/movie/search/Spider-Man: Homecoming").accept(MediaType.APPLICATION_JSON);
+                "/api/movies/search/Spider-Man: Homecoming").accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         String expected = "[{\"id\":1,\"title\":\"Spider-Man: Homecoming\",\"genre\":\"Action\",\"yearReleased\":2017,\"rating\":\"PG-13\",\"duration\":\"2h 13m\"}]";
@@ -89,27 +88,27 @@ public class MovieControllerTest {
 
     @Test
     public void testDeleteMovieAccepted() throws Exception {
-        Mockito.when(movieRepository.existsById(Mockito.anyLong())).thenReturn(true);
+        doNothing().when(movieService).deleteMovie(anyLong());
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(
-                "/api/movie/1").accept(MediaType.APPLICATION_JSON);
+                "/api/movies/1").accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
-        //200 Accepted
-        Assert.assertEquals(200, result.getResponse().getStatus());
+        //202 Accepted
+        Assert.assertEquals(202, result.getResponse().getStatus());
     }
 
     @Test
     public void testDeleteMovieNotFound() throws Exception {
-        Mockito.when(movieRepository.existsById(Mockito.anyLong())).thenReturn(false);
+        doThrow(new ElementNotFoundException("")).when(movieService).deleteMovie(any());
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(
-                "/api/movie/1").accept(MediaType.APPLICATION_JSON);
+                "/api/movies/1").accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
-        //200 Accepted
+        //404 Not Found
         Assert.assertEquals(404, result.getResponse().getStatus());
     }
 
@@ -118,10 +117,10 @@ public class MovieControllerTest {
         List<Movie> mockMovieList = new ArrayList<>();
         mockMovieList.add(new Movie(1L,"Spider-Man: Homecoming", "Action", 2017, "PG-13", "2h 13m"));
         mockMovieList.add(new Movie(2L, "Dr. Strange", "Action", 2016, "PG-13", "1h 55m"));
-        Mockito.when(movieRepository.findByTitleIgnoreCase(Mockito.anyString())).thenReturn(mockMovieList);
+        when(movieService.getMovies()).thenReturn(mockMovieList);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-                "/api/movie/search/Spider-Man: Homecoming").accept(MediaType.APPLICATION_JSON);
+                "/api/movies/list").accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         String expected = "[{\"id\":1,\"title\":\"Spider-Man: Homecoming\",\"genre\":\"Action\",\"yearReleased\":2017,\"rating\":\"PG-13\",\"duration\":\"2h 13m\"},{\"id\":2,\"title\":\"Dr. Strange\",\"genre\":\"Action\",\"yearReleased\":2016,\"rating\":\"PG-13\",\"duration\":\"1h 55m\"}]";
@@ -132,10 +131,10 @@ public class MovieControllerTest {
     @Test
     public void testGetMovieListNoMovies() throws Exception {
         List<Movie> mockMovieList = new ArrayList<>();
-        Mockito.when(movieRepository.findByTitleIgnoreCase(Mockito.anyString())).thenReturn(mockMovieList);
+        when(movieService.getMovies()).thenReturn(mockMovieList);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-                "/api/movie/search/Spider-Man: Homecoming").accept(MediaType.APPLICATION_JSON);
+                "/api/movies/list").accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         String expected = "[]";
