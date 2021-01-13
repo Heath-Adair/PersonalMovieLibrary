@@ -38,15 +38,6 @@ public class MovieControllerIT {
     }
 
     @Test
-    public void testGetTimeOfDay(){
-        HttpEntity entity = new HttpEntity(headers);
-        ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/api/timeOfDay"),
-                HttpMethod.GET, entity, String.class);
-        assertTrue(response.getBody().contains("Current server-side time is "));
-    }
-
-    @Test
     public void testGetEmptyMovieList() throws Exception {
         ResponseEntity<List<Movie>> response = restTemplate.exchange(
                 createURLWithPort("/api/movie/list"),
