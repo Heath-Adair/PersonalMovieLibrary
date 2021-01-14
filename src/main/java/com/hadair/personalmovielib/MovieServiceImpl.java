@@ -49,16 +49,16 @@ public class MovieServiceImpl implements MovieService {
 		if(movie.isPresent()) {
 			return movie.get();
 		} else {
-			throw new ElementNotFoundException("Movie with id: " + movieId + " not found.");
+			throw new ElementNotFoundException(withMovieNotFoundMessage(movieId));
 		}
 	}
 
 	@Override
 	public void deleteMovie(Long movieId) {
-		if (!movieRepository.existsById(movieId)) {
-			throw new ElementNotFoundException("Movie with ID: " + movieId + ", was not found");
-		} else {
+		if (movieRepository.existsById(movieId)) {
 			movieRepository.deleteById(movieId);
+		} else {
+			throw new ElementNotFoundException(withMovieNotFoundMessage(movieId));
 		}
 	}
 
@@ -71,5 +71,9 @@ public class MovieServiceImpl implements MovieService {
 	public List<Movie> getMovieByTitle(String movieTitle) {
 		//TODO - Address issues for movie titles like "The Mummy" vs "Mummy, The"?
 		return movieRepository.findByTitleIgnoreCase(movieTitle.trim());
+	}
+
+	private String withMovieNotFoundMessage(Long movieId) {
+		return "Movie with ID " + movieId + " not found.";
 	}
 }
