@@ -5,7 +5,6 @@ import com.hadair.exceptions.ElementNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -28,29 +27,20 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public Movie updateMovie(Long movieId, Movie updatedMovie) {
-		//TODO Fix this Optional abuse
-		Optional<Movie> optionalMovie = movieRepository.findById(movieId);
-		if(optionalMovie.isPresent()) {
-			Movie movie = optionalMovie.get();
+		return movieRepository.findById(movieId).map(movie -> {
 			movie.setTitle(updatedMovie.getTitle() != null ? updatedMovie.getTitle() : movie.getTitle());
 			movie.setDuration(updatedMovie.getDuration() != null ? updatedMovie.getDuration() : movie.getDuration());
 			movie.setGenre(updatedMovie.getGenre() != null ? updatedMovie.getGenre() : movie.getGenre());
 			movie.setRating(updatedMovie.getRating() != null ? updatedMovie.getRating() : movie.getRating());
 			movie.setYearReleased(updatedMovie.getYearReleased() != 0 ? updatedMovie.getYearReleased() : movie.getYearReleased());
 			return movieRepository.save(movie);
-		} else {
-			throw new ElementNotFoundException("Movie with id: " + movieId + " not found.");
-		}
+		}).orElseThrow(() -> new ElementNotFoundException(withMovieNotFoundMessage(movieId)));
 	}
 
 	@Override
 	public Movie getMovieByID(Long movieId) {
-		Optional<Movie> movie = movieRepository.findById(movieId);
-		if(movie.isPresent()) {
-			return movie.get();
-		} else {
-			throw new ElementNotFoundException(withMovieNotFoundMessage(movieId));
-		}
+		return movieRepository.findById(movieId)
+				.orElseThrow(() -> new ElementNotFoundException(withMovieNotFoundMessage(movieId)));
 	}
 
 	@Override
