@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -22,7 +23,6 @@ class MovieServiceImplTest {
 
     @Mock
     private MovieRepository movieRepository;
-    @Mock
     private Movie movie;
 
     @InjectMocks
@@ -30,6 +30,7 @@ class MovieServiceImplTest {
 
     @BeforeEach
     void setUp() {
+        movie = new Movie("Captain America: Civil War", "Action", 2016, "PG-13", "2h 28m");
     }
 
     @Nested
@@ -59,10 +60,23 @@ class MovieServiceImplTest {
     public class UpdateMovie {
         @Test
         void saveAndReturn() {
+            when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
+            when(movieRepository.save(movie)).thenReturn(movie);
+
+            Movie returnedMovie = movieService.updateMovie(anyLong(), movie);
+
+            assertNotNull(returnedMovie);
+            verify(movieRepository, times(1)).save(movie);
         }
 
         @Test
         void throwElementNotFoundException() {
+            when(movieRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+            ElementNotFoundException exception = assertThrows(ElementNotFoundException.class,
+                    () -> movieService.updateMovie(anyLong(), movie));
+
+            assertEquals("Movie with ID 0 not found.", exception.getMessage());
         }
     }
 
