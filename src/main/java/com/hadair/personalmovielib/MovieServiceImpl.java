@@ -27,13 +27,23 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public Movie updateMovie(Long movieId, Movie updatedMovie) {
-		return movieRepository.findById(movieId).map(movie -> {
-			movie.setTitle(updatedMovie.getTitle() != null ? updatedMovie.getTitle() : movie.getTitle());
-			movie.setDuration(updatedMovie.getDuration() != null ? updatedMovie.getDuration() : movie.getDuration());
-			movie.setGenre(updatedMovie.getGenre() != null ? updatedMovie.getGenre() : movie.getGenre());
-			movie.setRating(updatedMovie.getRating() != null ? updatedMovie.getRating() : movie.getRating());
-			movie.setYearReleased(updatedMovie.getYearReleased() != 0 ? updatedMovie.getYearReleased() : movie.getYearReleased());
-			return movieRepository.save(movie);
+		return movieRepository.findById(movieId).map(existingMovie -> {
+			existingMovie.setTitle(
+					updatedMovie.getTitle() == null ? existingMovie.getTitle() : updatedMovie.getTitle()
+			);
+			existingMovie.setDuration(
+					updatedMovie.getDuration() == null ? existingMovie.getDuration() : updatedMovie.getDuration()
+			);
+			existingMovie.setGenre(
+					updatedMovie.getGenre() == null ? existingMovie.getGenre() : updatedMovie.getGenre()
+			);
+			existingMovie.setRating(
+					updatedMovie.getRating() == null ? existingMovie.getRating() : updatedMovie.getRating()
+			);
+			existingMovie.setYearReleased(
+					updatedMovie.getYearReleased() == 0 ? existingMovie.getYearReleased() : updatedMovie.getYearReleased()
+			);
+			return movieRepository.save(existingMovie);
 		}).orElseThrow(() -> new ElementNotFoundException(withMovieNotFoundMessage(movieId)));
 	}
 
