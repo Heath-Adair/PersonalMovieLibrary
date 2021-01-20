@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TimeController {
 
-    private TimeService timeService;
+    private final TimeService timeService;
 
     public TimeController(TimeService timeService) {
         this.timeService = timeService;
