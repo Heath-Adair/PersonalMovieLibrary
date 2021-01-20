@@ -6,17 +6,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
+//TODO make separate classes for request, response and entity
 @Entity
 public class Movie {
-
+    //TODO Make use of @Column annotation
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotBlank
     private String title;
+    //TODO create an enum - add validation? (if present, must be on of the enum values)
     private String genre;
+    //TODO change to LocalDate and rename to releaseDate (if present, must be valid date format)
     private int yearReleased;
-    private String rating; //An enum would be better
+    //TODO create an enum - add validation? (if present, must be on of the enum values)
+    private String rating;
+    //TODO change to java.time.Duration
     private String duration;
 
     protected Movie() {}
